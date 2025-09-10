@@ -1,0 +1,117 @@
+name: Helm Deploy
+
+on:
+  push:
+    branches:
+      - feature/boutique-helm
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to EKS'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  HELM_CHART_PATH: "./microservices-chart"
+  CHART_NAME: "microservices-chart"
+  #EKS_CLUSTER_NAME: "online-boutique-eks"
+  AWS_DEFAULT_REGION: "us-east-2"
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/feature/boutique-helm'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Helm
+        run: |
+          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/
+          
+      - name: Lint Helm Chart
+        run: helm lint $HELM_CHART_PATH
+
+  helm-package:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/feature/boutique-helm'
+    needs: helm-lint
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Helm
+        run: |
+          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/
+          
+      - name: Package Helm Chart
+        run: helm package $HELM_CHART_PATH
+        
+      - name: Upload Helm Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: helm-chart
+          path: "*.tgz"
+          retention-days: 7
+
+ # deploy:
+    #runs-on: ubuntu-latest
+    #if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+    #environment: production
+    #permissions:
+      #id-token: write
+      #contents: read
+    #steps:
+      #- uses: actions/checkout@v4
+
+      #- name: Configure AWS credentials
+        #uses: aws-actions/configure-aws-credentials@v4
+        #with:
+          #role-to-assume: ${{ secrets.ROLE_ARN }}
+          #role-session-name: GitHubActions-${{ github.run_id }}
+          #aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          
+      #- name: Verify AWS Identity
+        #run: aws sts get-caller-identity
+
+      #- name: Install Helm
+        #run: |
+          #curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          #sudo mv linux-amd64/helm /usr/local/bin/
+
+      #- name: Deploy to EKS
+        #run: |
+          #aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER_NAME
+          #kubectl get namespace online-boutique || kubectl create namespace online-boutique
+          #helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
+            #--namespace online-boutique
+
+  #verify:
+    #runs-on: ubuntu-latest
+    #if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+    #needs: deploy
+    #permissions:
+      #id-token: write
+      #contents: read
+    #steps:
+      #- uses: actions/checkout@v4
+      
+      #- name: Configure AWS credentials
+        #uses: aws-actions/configure-aws-credentials@v4
+        #with:
+          #role-to-assume: ${{ secrets.ROLE_ARN }}
+          #role-session-name: GitHubActions-${{ github.run_id }}
+          #aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      #- name: Verify Deployment
+        #run: |
+          #aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER_NAME
+          #echo "Checking deployment status..."
+          #kubectl get pods -n online-boutique
+          #kubectl get svc -n online-boutique
+          #kubectl get ingress -n online-boutique
+          #echo "Checking frontend service endpoints..."
+          #kubectl get endpoints frontend -n online-boutique
+          #echo "Checking if frontend pods are ready..."
+          #kubectl wait --for=condition=ready pod -l app=frontend -n online-boutique --timeout=300s
