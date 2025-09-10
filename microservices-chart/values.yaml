@@ -1,0 +1,176 @@
+global:
+  imageRegistry: "663264486938.dkr.ecr.eu-west-2.amazonaws.com"
+  imagePullSecrets: []
+  imageTag: "latest"
+services:
+  adservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/adservice
+      tag: "bbe34b04"
+    port: 9555
+    resources:
+      requests:
+        cpu: 200m
+        memory: 180Mi
+      limits:
+        cpu: 300m
+        memory: 300Mi
+  cartservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/cartservice
+      tag: "8087539b"
+    port: 7070
+    resources:
+      requests:
+        cpu: 200m
+        memory: 64Mi
+      limits:
+        cpu: 300m
+        memory: 128Mi
+  checkoutservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/checkoutservice
+      tag: "25f72e28"
+    port: 5050
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  currencyservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/currencyservice
+      tag: "89d6f18c"
+    port: 7000
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  emailservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/emailservice
+      tag: "fed80416"
+    port: 8080
+    servicePort: 5000
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  frontend:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/frontend
+      tag: "0ada6df3"
+    port: 8080
+    serviceType: ClusterIP
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  loadgenerator:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/loadgenerator
+      tag: "fabd1cf7"
+    replicas: 1
+    users: "10"
+    rate: "1"
+    resources:
+      requests:
+        cpu: 300m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+  paymentservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/paymentservice
+      tag: "8ae99fb2"
+    port: 50051
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  productcatalogservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/productcatalogservice
+      tag: "9f82850e"
+    port: 3550
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  recommendationservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/recommendationservice
+      tag: "5915f761"
+    port: 8080
+    resources:
+      requests:
+        cpu: 100m
+        memory: 220Mi
+      limits:
+        cpu: 200m
+        memory: 450Mi
+  shippingservice:
+    image:
+      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/shippingservice
+      tag: "e10f1908"
+    port: 50051
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+redis:
+  image: redis:alpine
+  port: 6379
+  resources:
+    requests:
+      cpu: 70m
+      memory: 200Mi
+    limits:
+      cpu: 125m
+      memory: 256Mi
+securityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  privileged: false
+  readOnlyRootFilesystem: true
+dockerregistry:
+  enabled: false
+ingress:
+  enabled: true
+  name: online-boutique
+  className: alb
+  scheme: internet-facing
+  targetType: ip
+  certificateArn: "arn:aws:acm:eu-west-2:663264486938:certificate/64e45cde-e6b2-4f02-97cd-25a06a580031"
+  listenPorts: '[{"HTTP": 80}, {"HTTPS": 443}]'
+  sslRedirect: "443"
+  groupName: online-boutique
+  host: online-boutique.teachdev.online
