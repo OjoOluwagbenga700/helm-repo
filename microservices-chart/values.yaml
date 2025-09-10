@@ -66,8 +66,8 @@ services:
         memory: 128Mi
   frontend:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/frontend
-      tag: "0ada6df3"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/frontend
+      tag: "bb4ce0c2edea5b0df0a289f888e704b86ce2f9dd"
     port: 8080
     serviceType: ClusterIP
     resources:
