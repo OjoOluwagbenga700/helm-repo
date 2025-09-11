@@ -16,7 +16,8 @@ env:
   HELM_CHART_PATH: "./microservices-chart"
   CHART_NAME: "microservices-chart"
   #EKS_CLUSTER_NAME: "online-boutique-eks"
-  AWS_DEFAULT_REGION: "us-east-2"
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
 
 jobs:
   helm-lint:
@@ -55,34 +56,33 @@ jobs:
           path: "*.tgz"
           retention-days: 7
 
- # deploy:
-    #runs-on: ubuntu-latest
-    #if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
-    #environment: production
-    #permissions:
-      #id-token: write
-      #contents: read
-    #steps:
-      #- uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
 
-      #- name: Configure AWS credentials
-        #uses: aws-actions/configure-aws-credentials@v4
-        #with:
-          #role-to-assume: ${{ secrets.ROLE_ARN }}
-          #role-session-name: GitHubActions-${{ github.run_id }}
-          #aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          
-      #- name: Verify AWS Identity
-        #run: aws sts get-caller-identity
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: GitHubActions-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      #- name: Install Helm
-        #run: |
-          #curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-          #sudo mv linux-amd64/helm /usr/local/bin/
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
+      - name: Install Helm
+        run: |
+          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/
 
       #- name: Deploy to EKS
         #run: |
-          #aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER_NAME
+          #aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
           #kubectl get namespace online-boutique || kubectl create namespace online-boutique
           #helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
             #--namespace online-boutique
@@ -100,13 +100,13 @@ jobs:
       #- name: Configure AWS credentials
         #uses: aws-actions/configure-aws-credentials@v4
         #with:
-          #role-to-assume: ${{ secrets.ROLE_ARN }}
+          #role-to-assume: ${{ env.AWS_ROLE_ARN }}
           #role-session-name: GitHubActions-${{ github.run_id }}
-          #aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          #aws-region: ${{ env.AWS_REGION }}
 
       #- name: Verify Deployment
         #run: |
-          #aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER_NAME
+          #aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
           #echo "Checking deployment status..."
           #kubectl get pods -n online-boutique
           #kubectl get svc -n online-boutique
