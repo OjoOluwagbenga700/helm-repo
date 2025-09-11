@@ -67,7 +67,7 @@ services:
   frontend:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/frontend
-      tag: "bb4ce0c2edea5b0df0a289f888e704b86ce2f9dd"
+      tag: "4e2035a0f99e91937e8aa75f7d8ba136248a0aa1"
     port: 8080
     serviceType: ClusterIP
     resources:
