@@ -139,6 +139,10 @@ services:
       limits:
         cpu: 200m
         memory: 128Mi
+  "":
+    image:
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
+      tag: 31e5458bc4bb103b39e0a2a87cf586641554e39e
 redis:
   image: redis:alpine
   port: 6379
