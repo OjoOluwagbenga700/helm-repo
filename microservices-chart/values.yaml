@@ -117,8 +117,8 @@ services:
         memory: 128Mi
   recommendationservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/recommendationservice
-      tag: "5915f761"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/recommendationservice
+      tag: "c02412ef64012251030af0029af1c3374286328e"
     port: 8080
     resources:
       requests:
