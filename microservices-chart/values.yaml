@@ -139,14 +139,7 @@ services:
       limits:
         cpu: 200m
         memory: 128Mi
-  "":
-    image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
-      tag: 31e5458bc4bb103b39e0a2a87cf586641554e39e
-  loadgeneratorservice:
-    image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/loadgeneratorservice
-      tag: 44bce3921a67a628dd4dfa049f69fef1b8638276
+  
 redis:
   image: redis:alpine
   port: 6379
