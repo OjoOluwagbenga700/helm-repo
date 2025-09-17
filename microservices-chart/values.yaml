@@ -105,8 +105,8 @@ services:
         memory: 128Mi
   productcatalogservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/productcatalogservice
-      tag: "9f82850e"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
+      tag: "3ed5cd7954f53e180728a0b0db27594f7d357a22"
     port: 3550
     resources:
       requests:
@@ -139,7 +139,6 @@ services:
       limits:
         cpu: 200m
         memory: 128Mi
-  
 redis:
   image: redis:alpine
   port: 6379
