@@ -67,7 +67,7 @@ services:
   frontend:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/frontend
-      tag: "4e2035a0f99e91937e8aa75f7d8ba136248a0aa1"
+      tag: "74fac0f35e70a0ad280599c509e3df3b4091883a"
     port: 8080
     serviceType: ClusterIP
     resources:
@@ -105,8 +105,8 @@ services:
         memory: 128Mi
   productcatalogservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/productcatalogservice
-      tag: "9f82850e"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
+      tag: "a0ea137cf61f26a99f9ea829d81d4c26694a2882"
     port: 3550
     resources:
       requests:
@@ -139,7 +139,6 @@ services:
       limits:
         cpu: 200m
         memory: 128Mi
-  
 redis:
   image: redis:alpine
   port: 6379
