@@ -106,7 +106,7 @@ services:
   productcatalogservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
-      tag: "a0ea137cf61f26a99f9ea829d81d4c26694a2882"
+      tag: "f388e00aa36e9ba772bc04f66002eb2785146cd5"
     port: 3550
     resources:
       requests:
