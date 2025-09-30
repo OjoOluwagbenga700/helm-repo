@@ -29,8 +29,8 @@ services:
         memory: 128Mi
   checkoutservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/checkoutservice
-      tag: "25f72e28"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/checkoutservice
+      tag: "c5e3da8ce2a1d25df60a189be4fb80a0068f9852"
     port: 5050
     resources:
       requests:
