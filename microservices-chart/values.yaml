@@ -79,8 +79,8 @@ services:
         memory: 128Mi
   loadgenerator:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/loadgenerator
-      tag: "fabd1cf7"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/loadgeneratorservice
+      tag: "77fd6bbbeb60a3848601370147504e9e0936efa3"
     replicas: 1
     users: "10"
     rate: "1"
