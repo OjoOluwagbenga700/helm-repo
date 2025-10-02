@@ -17,8 +17,8 @@ services:
         memory: 300Mi
   cartservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/cartservice
-      tag: "8087539b"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/cartservice
+      tag: "5d507dab45a0ebb0cfbf2ff61f093b6c2ea82f60"
     port: 7070
     resources:
       requests:
