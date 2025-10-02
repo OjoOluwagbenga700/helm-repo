@@ -5,8 +5,8 @@ global:
 services:
   adservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/adservice
-      tag: "bbe34b04"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/adservice
+      tag: "4e6623f6bf08b4e95260a07f23e782ad00b38034"
     port: 9555
     resources:
       requests:
