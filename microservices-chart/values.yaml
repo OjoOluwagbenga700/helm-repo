@@ -93,8 +93,8 @@ services:
         memory: 512Mi
   paymentservice:
     image:
-      repository: 663264486938.dkr.ecr.eu-west-2.amazonaws.com/paymentservice
-      tag: "8ae99fb2"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/paymentservice
+      tag: "9094375210ac16360bbcff448625d19345e35bf8"
     port: 50051
     resources:
       requests:
