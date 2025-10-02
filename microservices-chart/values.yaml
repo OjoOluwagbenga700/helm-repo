@@ -1,5 +1,5 @@
 global:
-  imageRegistry: "663264486938.dkr.ecr.eu-west-2.amazonaws.com"
+  imageRegistry: "969446871231.dkr.ecr.us-east-2.amazonaws.com"
   imagePullSecrets: []
   imageTag: "latest"
 services:
