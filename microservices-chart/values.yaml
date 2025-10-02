@@ -6,7 +6,7 @@ services:
   adservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/adservice
-      tag: "4e6623f6bf08b4e95260a07f23e782ad00b38034"
+      tag: "4ebdad6cd6643b337fe28ac03094da3f8bdf4812"
     port: 9555
     resources:
       requests:
