@@ -169,8 +169,8 @@ ingress:
   className: alb
   scheme: internet-facing
   targetType: ip
-  certificateArn: "arn:aws:acm:eu-west-2:663264486938:certificate/64e45cde-e6b2-4f02-97cd-25a06a580031"
+  certificateArn: "arn:aws:acm:us-east-2:969446871231:certificate/a5f54647-1a3d-458f-a129-8598b6e5f049"
   listenPorts: '[{"HTTP": 80}, {"HTTPS": 443}]'
   sslRedirect: "443"
   groupName: online-boutique
-  host: online-boutique.teachdev.online
+  host: online-boutique.f3techglobal.online

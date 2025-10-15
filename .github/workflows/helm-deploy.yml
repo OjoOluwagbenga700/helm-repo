@@ -26,7 +26,7 @@ env:
 jobs:
   helm-lint:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+    if: github.event_name == 'pull_request' || (github.ref == 'refs/heads/feature/boutique-helm' && github.event_name == 'push')
     steps:
       - uses: actions/checkout@v4
       
@@ -40,8 +40,7 @@ jobs:
 
   helm-package:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push')
-    needs: helm-lint
+    if:  github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
       
@@ -49,6 +48,9 @@ jobs:
         run: |
           curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
           sudo mv linux-amd64/helm /usr/local/bin/
+          
+      - name: Lint Helm Chart
+        run: helm lint $HELM_CHART_PATH
           
       - name: Package Helm Chart
         run: helm package $HELM_CHART_PATH
