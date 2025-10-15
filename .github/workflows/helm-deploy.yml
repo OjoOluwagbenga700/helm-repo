@@ -83,8 +83,8 @@ jobs:
 
       - name: Install Helm
         run: |
-         # curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-         # sudo mv linux-amd64/helm /usr/local/bin/
+          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/
 
       - name: Deploy to EKS
         run: |
@@ -94,6 +94,24 @@ jobs:
             --namespace online-boutique \
             --force
 
+      - name: Debug Pod Issues
+        run: |
+          echo "=== Pod Status ==="
+          kubectl get pods -n online-boutique -o wide
+          echo "\n=== Failed/Pending Pods ==="
+          kubectl get pods -n online-boutique --field-selector=status.phase!=Running || true
+          echo "\n=== Pod Events ==="
+          kubectl get events -n online-boutique --sort-by='.lastTimestamp' | tail -20
+          echo "\n=== Frontend Logs ==="
+          kubectl logs -n online-boutique -l app=frontend --tail=30 || true
+          echo "\n=== Service Endpoints ==="
+          kubectl get endpoints -n online-boutique
+          echo "\n=== Describe Failed Pods ==="
+          for pod in $(kubectl get pods -n online-boutique --field-selector=status.phase!=Running -o name 2>/dev/null); do
+            echo "Describing $pod:"
+            kubectl describe -n online-boutique $pod
+          done
+          
       - name: Verify Deployment
         run: |
           echo "Checking deployment status..."
