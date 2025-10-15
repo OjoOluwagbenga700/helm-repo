@@ -91,7 +91,8 @@ jobs:
           aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
           kubectl get namespace online-boutique || kubectl create namespace online-boutique
           helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
-            --namespace online-boutique
+            --namespace online-boutique \
+            --force
 
       - name: Verify Deployment
         run: |
