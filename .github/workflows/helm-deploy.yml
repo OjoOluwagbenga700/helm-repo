@@ -19,7 +19,7 @@ on:
 env:
   HELM_CHART_PATH: "./microservices-chart"
   CHART_NAME: "microservices-chart"
-  EKS_CLUSTER_NAME: "online-boutique-eks"
+  EKS_CLUSTER_NAME: "microservice-eks"
   AWS_REGION: ${{ vars.AWS_REGION }}
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
 
@@ -83,8 +83,8 @@ jobs:
 
       - name: Install Helm
         run: |
-          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-          sudo mv linux-amd64/helm /usr/local/bin/
+         # curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+         # sudo mv linux-amd64/helm /usr/local/bin/
 
       - name: Deploy to EKS
         run: |
