@@ -17,8 +17,8 @@ services:
         memory: 300Mi
   cartservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/cartservice
-      tag: "5d507dab45a0ebb0cfbf2ff61f093b6c2ea82f60"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 7070
     resources:
       requests:
@@ -41,8 +41,8 @@ services:
         memory: 128Mi
   currencyservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/currencyservice
-      tag: "9dbf2f87b4d8896db9f2391276f3e0f8f3b8c48f"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 7000
     resources:
       requests:
@@ -53,8 +53,8 @@ services:
         memory: 128Mi
   emailservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
-      tag: "42f5893e3638f76e1314e2763fc1bf7937beddd8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 8080
     servicePort: 5000
     resources:
@@ -93,8 +93,8 @@ services:
         memory: 512Mi
   paymentservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/paymentservice
-      tag: "9094375210ac16360bbcff448625d19345e35bf8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 50051
     resources:
       requests:
@@ -105,8 +105,8 @@ services:
         memory: 128Mi
   productcatalogservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
-      tag: "f388e00aa36e9ba772bc04f66002eb2785146cd5"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 3550
     resources:
       requests:
@@ -129,8 +129,8 @@ services:
         memory: 450Mi
   shippingservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/shippingservice
-      tag: "b2f151acccd746eb14514aa0efdb679daf021e69"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 50051
     resources:
       requests:
