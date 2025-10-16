@@ -105,8 +105,8 @@ services:
         memory: 128Mi
   productcatalogservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
-      tag: "f388e00aa36e9ba772bc04f66002eb2785146cd5"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 3550
     resources:
       requests:
