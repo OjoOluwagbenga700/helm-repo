@@ -53,8 +53,8 @@ services:
         memory: 128Mi
   emailservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
-      tag: "42f5893e3638f76e1314e2763fc1bf7937beddd8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 8080
     servicePort: 5000
     resources:
