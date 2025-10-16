@@ -129,8 +129,8 @@ services:
         memory: 450Mi
   shippingservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/shippingservice
-      tag: "b2f151acccd746eb14514aa0efdb679daf021e69"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 50051
     resources:
       requests:
