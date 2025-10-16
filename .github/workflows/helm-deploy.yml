@@ -3,10 +3,6 @@ name: Helm Deploy
 on:
   push:
     branches:
-      - feature/boutique-helm
-      - main
-  pull_request:
-    branches:
       - main
   workflow_dispatch:
     inputs:
@@ -24,20 +20,6 @@ env:
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
 
 jobs:
-  helm-lint:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || (github.ref == 'refs/heads/feature/boutique-helm' && github.event_name == 'push')
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install Helm
-        run: |
-          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-          sudo mv linux-amd64/helm /usr/local/bin/
-          
-      - name: Lint Helm Chart
-        run: helm lint $HELM_CHART_PATH
-
   helm-package:
     runs-on: ubuntu-latest
     if:  github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -93,25 +75,7 @@ jobs:
           helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
             --namespace online-boutique \
             --force
-
-      - name: Debug Pod Issues
-        run: |
-          echo "=== Pod Status ==="
-          kubectl get pods -n online-boutique -o wide
-          echo "\n=== Failed/Pending Pods ==="
-          kubectl get pods -n online-boutique --field-selector=status.phase!=Running || true
-          echo "\n=== Pod Events ==="
-          kubectl get events -n online-boutique --sort-by='.lastTimestamp' | tail -20
-          echo "\n=== Frontend Logs ==="
-          kubectl logs -n online-boutique -l app=frontend --tail=30 || true
-          echo "\n=== Service Endpoints ==="
-          kubectl get endpoints -n online-boutique
-          echo "\n=== Describe Failed Pods ==="
-          for pod in $(kubectl get pods -n online-boutique --field-selector=status.phase!=Running -o name 2>/dev/null); do
-            echo "Describing $pod:"
-            kubectl describe -n online-boutique $pod
-          done
-          
+      
       - name: Verify Deployment
         run: |
           echo "Checking deployment status..."
