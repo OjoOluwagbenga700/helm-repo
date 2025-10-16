@@ -41,8 +41,8 @@ services:
         memory: 128Mi
   currencyservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/currencyservice
-      tag: "9dbf2f87b4d8896db9f2391276f3e0f8f3b8c48f"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 7000
     resources:
       requests:
