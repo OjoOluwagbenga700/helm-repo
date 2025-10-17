@@ -118,7 +118,7 @@ services:
   recommendationservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/recommendationservice
-      tag: "4486cdca7aabc9976d6dd43d463c29af6053ffd5"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     port: 8080
     resources:
       requests:
