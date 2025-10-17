@@ -80,7 +80,7 @@ services:
   loadgenerator:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/loadgeneratorservice
-      tag: "77fd6bbbeb60a3848601370147504e9e0936efa3"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     replicas: 1
     users: "10"
     rate: "1"
