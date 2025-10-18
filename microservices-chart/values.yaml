@@ -6,7 +6,7 @@ services:
   adservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/adservice
-      tag: "4ebdad6cd6643b337fe28ac03094da3f8bdf4812"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     port: 9555
     resources:
       requests:
@@ -67,7 +67,7 @@ services:
   frontend:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/frontend
-      tag: "54aa388f31a89cd1584b628e7526c4794fa5426e"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     port: 8080
     serviceType: ClusterIP
     resources:
@@ -80,7 +80,7 @@ services:
   loadgenerator:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/loadgeneratorservice
-      tag: "77fd6bbbeb60a3848601370147504e9e0936efa3"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     replicas: 1
     users: "10"
     rate: "1"
@@ -118,7 +118,7 @@ services:
   recommendationservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/recommendationservice
-      tag: "4486cdca7aabc9976d6dd43d463c29af6053ffd5"
+      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
     port: 8080
     resources:
       requests:
