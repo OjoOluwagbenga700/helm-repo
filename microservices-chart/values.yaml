@@ -17,8 +17,8 @@ services:
         memory: 300Mi
   cartservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
-      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/cartservice
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 7070
     resources:
       requests:
@@ -41,7 +41,7 @@ services:
         memory: 128Mi
   currencyservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/currencyservice
       tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 7000
     resources:
@@ -53,8 +53,8 @@ services:
         memory: 128Mi
   emailservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
-      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 8080
     servicePort: 5000
     resources:
@@ -93,7 +93,7 @@ services:
         memory: 512Mi
   paymentservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/paymentservice
       tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 50051
     resources:
@@ -105,8 +105,8 @@ services:
         memory: 128Mi
   productcatalogservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
-      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/productcatalogservice
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 3550
     resources:
       requests:
@@ -129,8 +129,8 @@ services:
         memory: 450Mi
   shippingservice:
     image:
-      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/
-      tag: "bc750c89b6151d3c5939f0912c1d19310a4a1ac8"
+      repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/shippingservice
+      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
     port: 50051
     resources:
       requests:
