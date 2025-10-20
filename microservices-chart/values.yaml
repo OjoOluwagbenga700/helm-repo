@@ -30,7 +30,7 @@ services:
   checkoutservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/checkoutservice
-      tag: "c5e3da8ce2a1d25df60a189be4fb80a0068f9852"
+      tag: "cb42cafd924ca7fdf60833e1b4ec9d6c1b72b412"
     port: 5050
     resources:
       requests:
