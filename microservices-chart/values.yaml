@@ -94,7 +94,7 @@ services:
   paymentservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/paymentservice
-      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
+      tag: "af986260662c01f4ce2c850db7acf41ec38fa613"
     port: 50051
     resources:
       requests:
