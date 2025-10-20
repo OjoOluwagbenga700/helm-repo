@@ -18,40 +18,55 @@ env:
   EKS_CLUSTER_NAME: "microservice-eks"
   AWS_REGION: ${{ vars.AWS_REGION }}
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  NAMESPACE: "online-boutique"
 
 jobs:
+  # --------------------------
+  # JOB 1: Package Helm Chart
+  # --------------------------
   helm-package:
     runs-on: ubuntu-latest
-    if:  github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install Helm
         run: |
-          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-          sudo mv linux-amd64/helm /usr/local/bin/
-          
+          curl -sSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/helm
+          helm version
+
       - name: Lint Helm Chart
         run: helm lint $HELM_CHART_PATH
-          
+
       - name: Package Helm Chart
         run: helm package $HELM_CHART_PATH
-        
-      - name: Upload Helm Package
+
+      - name: Upload Helm Package Artifact
         uses: actions/upload-artifact@v4
         with:
           name: helm-chart
           path: "*.tgz"
           retention-days: 7
 
+  # --------------------------
+  # JOB 2: Deploy to EKS
+  # --------------------------
   deploy-to-eks:
     runs-on: ubuntu-latest
+    needs: helm-package
     if: github.event_name == 'workflow_dispatch' && inputs.deploy == true
     permissions:
       id-token: write
       contents: read
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download Helm Package Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: helm-chart
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -65,24 +80,52 @@ jobs:
 
       - name: Install Helm
         run: |
-          curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
-          sudo mv linux-amd64/helm /usr/local/bin/
+          curl -sSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz | tar -xz
+          sudo mv linux-amd64/helm /usr/local/bin/helm
 
-      - name: Deploy to EKS
+      - name: Connect to EKS
         run: |
           aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
-          kubectl get namespace online-boutique || kubectl create namespace online-boutique
-          helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
-            --namespace online-boutique \
-            --force
-      
-      - name: Verify Deployment
+          kubectl cluster-info
+
+      - name: Prepare Namespace
         run: |
-          echo "Checking deployment status..."
-          kubectl get pods -n online-boutique
-          kubectl get svc -n online-boutique
-          kubectl get ingress -n online-boutique
-          echo "Checking frontend service endpoints..."
-          kubectl get endpoints frontend -n online-boutique
-          echo "Checking if frontend pods are ready..."
-          kubectl wait --for=condition=ready pod -l app=frontend -n online-boutique --timeout=300s
+          if ! kubectl get namespace $NAMESPACE >/dev/null 2>&1; then
+            kubectl create namespace $NAMESPACE
+          fi
+          echo "✅ Namespace ensured: $NAMESPACE"
+
+      - name: Safe Helm Deployment
+        run: |
+          echo "🚀 Starting Helm deployment..."
+          set -e
+
+          # Check if release exists
+          if helm status $CHART_NAME -n $NAMESPACE >/dev/null 2>&1; then
+            echo "🔄 Existing Helm release found, upgrading..."
+          else
+            echo "🆕 No existing release, installing fresh..."
+          fi
+
+          # Deploy with rollback on failure
+          helm upgrade --install $CHART_NAME $HELM_CHART_PATH \
+            --namespace $NAMESPACE \
+            --create-namespace \
+            --atomic \
+            --wait \
+            --timeout 10m
+
+          echo "✅ Helm deployment completed successfully."
+
+      - name: Verify Deployment Health
+        run: |
+          echo "🔍 Verifying deployed resources in namespace $NAMESPACE..."
+          kubectl get pods -n $NAMESPACE
+          kubectl get svc -n $NAMESPACE
+          kubectl get ingress -n $NAMESPACE
+
+          echo "⏳ Waiting for frontend pods to become ready..."
+          kubectl wait --for=condition=ready pod -l app=frontend -n $NAMESPACE --timeout=300s || true
+
+          echo "🔎 Checking frontend service endpoints..."
+          kubectl get endpoints frontend -n $NAMESPACE || true
