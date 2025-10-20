@@ -54,7 +54,7 @@ services:
   emailservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/emailservice
-      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
+      tag: "dc8579598d8339073c874c86059695d8b6c3dc58"
     port: 8080
     servicePort: 5000
     resources:
