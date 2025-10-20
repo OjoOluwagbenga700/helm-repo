@@ -18,7 +18,7 @@ services:
   cartservice:
     image:
       repository: 969446871231.dkr.ecr.us-east-2.amazonaws.com/cartservice
-      tag: "6c5d3e5ab57c4c1c8327c2ef37f414d85a5eeef8"
+      tag: "ede678dbe9a8a2db7f979f46c7ef953ef3c946e7"
     port: 7070
     resources:
       requests:
